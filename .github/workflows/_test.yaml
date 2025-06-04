@@ -16,7 +16,7 @@ jobs:
       - name: Install uv and pin python
         uses: astral-sh/setup-uv@v6
         with:
-          python-version: ${{ env.PYTHON_VERSION }}
+          python-version: "${{ env.PYTHON_VERSION }}"
 
       - name: Test
         run: uvx tox -e lint
@@ -30,7 +30,7 @@ jobs:
       - name: Install uv and pin python
         uses: astral-sh/setup-uv@v6
         with:
-          python-version: ${{ env.PYTHON_VERSION }}
+          python-version: "${{ env.PYTHON_VERSION }}"
 
       - name: Test
         run: uvx tox -e static
@@ -44,7 +44,7 @@ jobs:
       - name: Install uv and pin python
         uses: astral-sh/setup-uv@v6
         with:
-          python-version: ${{ env.PYTHON_VERSION }}
+          python-version: "${{ env.PYTHON_VERSION }}"
 
       - name: Test
         run: uvx tox -e unit
