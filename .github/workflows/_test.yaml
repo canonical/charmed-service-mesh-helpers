@@ -3,6 +3,9 @@ name: Test the package
 on:
   workflow_call:
 
+env:
+  PYTHON_VERSION: "3.10"
+
 jobs:
   linting:
     name: Linting
@@ -13,7 +16,7 @@ jobs:
       - name: Install uv and pin python
         uses: astral-sh/setup-uv@v6
         with:
-          python-version: 3.10
+          python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Test
         run: uvx tox -e lint
@@ -27,7 +30,7 @@ jobs:
       - name: Install uv and pin python
         uses: astral-sh/setup-uv@v6
         with:
-          python-version: 3.10
+          python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Test
         run: uvx tox -e static
@@ -41,7 +44,7 @@ jobs:
       - name: Install uv and pin python
         uses: astral-sh/setup-uv@v6
         with:
-          python-version: 3.10
+          python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Test
         run: uvx tox -e unit
