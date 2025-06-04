@@ -11,3 +11,5 @@ jobs:
   test:
     name: Test the package
     uses: ./.github/workflows/_test.yaml
+    with:
+      python-version: '3.10'
