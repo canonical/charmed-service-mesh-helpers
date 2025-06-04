@@ -1,0 +1,14 @@
+name: Test and publish the package on release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  test:
+    name: Test the package
+    uses: ./.github/workflows/_test.yaml
+  publish:
+    name: Publish the package
+    needs: test
+    uses: ./.github/workflows/_publish.yaml
