@@ -1,3 +1,5 @@
+from contextlib import nullcontext as does_not_raise
+
 import pytest
 
 from charmed_service_mesh_helpers import charm_kubernetes_label
@@ -46,6 +48,28 @@ def test_generate_label_cases(model_name, app_name, prefix, suffix, expected):
     label = charm_kubernetes_label(model_name, app_name, prefix, suffix)
     assert label == expected
     assert len(label) <= 63
+
+
+def test_separator():
+    label = charm_kubernetes_label("m"*40, "app"*40, "separator")
+    assert label == ""
+    assert len(label) <= 63
+
+
+@pytest.mark.parametrize(
+    "model_name, app_name, suffix, max_length, context_raised",
+    [
+        ("m" * 31, "a" * 31, "", 63, does_not_raise()),  # No truncation needed
+        ("m" * 31, "a" * 31, "", 62, does_not_raise()),  # Truncation needed, but valid
+        ("m", "a", "", 1, pytest.raises(ValueError)),  # Impossible to fit
+        ("m", "a", "s" * 60, 62, pytest.raises(ValueError)),  # Suffix too long
+        ("m", "a", "s" * 5, 7, pytest.raises(ValueError)),  # Suffix too long
+        ("m", "a", "s" * 5, 8, does_not_raise()),  # Suffix too long
+    ],
+)
+def test_max_length(model_name, app_name, suffix, max_length, context_raised):
+    with context_raised:
+        charm_kubernetes_label(model_name=model_name, app_name=app_name, suffix=suffix, max_length=max_length)
 
 
 def test_truncated_labels_are_unique():
