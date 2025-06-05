@@ -11,8 +11,7 @@ name = "charmed-service-mesh-helpers"
 version = "999.999.999"  # Do not edit - automatically replaced with a valid release version at release time
 description = "Helpers for the Service Mesh charms."
 readme = "README.md"
-license = "Apache-2.0"
-license-files = ["LICENSE"]
+license = { file = "LICENSE" }
 requires-python = ">=3.8"
 classifiers = [
     "Programming Language :: Python :: 3",
