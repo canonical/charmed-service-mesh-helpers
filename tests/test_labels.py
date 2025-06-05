@@ -4,45 +4,46 @@ from charmed_service_mesh_helpers import charm_kubernetes_label
 
 
 @pytest.mark.parametrize(
-    "model_name, app_name, suffix, expected",
+    "model_name, app_name, prefix, suffix, expected",
     [
-        ("model", "app", None, "model-app"),
-        ("model", "app", "svc", "model-app-svc"),
+        ("model", "app", "", "", "model.app"),
+        ("model", "app", "prefix/", "-suffix", "prefix/model.app-suffix"),
         # Not truncated
         (
             "m" * 31,
             "a" * 31,
-            None,
-            f"{'m'*31}-{'a'*31}",
+            "",
+            "",
+            f"{'m'*31}.{'a'*31}",
         ),
         # Needs truncation
         (
             "m" * 32,
             "a" * 31,
-            None,
-            "mmmmmmmmmmmmmmmmmmmmmmmmmmm-aaaaaaaaaaaaaaaaaaaaaaaaaaaa-6014d8",
+            "",
+            "",
+            "mmmmmmmmmmmmmmmmmmmmmmmmmmm.aaaaaaaaaaaaaaaaaaaaaaaaaaaa.c4949d",
         ),
         # Needs truncation
         (
-                "m" * 33,
-                "a" * 31,
-                None,
-                "mmmmmmmmmmmmmmmmmmmmmmmmmmmm-aaaaaaaaaaaaaaaaaaaaaaaaaaa-928fe5",
+            "m" * 33,
+            "a" * 31,
+            "",
+            "",
+            "mmmmmmmmmmmmmmmmmmmmmmmmmmmm.aaaaaaaaaaaaaaaaaaaaaaaaaaa.a4e680",
         ),
-        # Needs truncation with suffix
+        # Needs truncation with prefix and suffix
         (
             "m" * 40,
             "a" * 40,
-            "suffix",
-            "mmmmmmmmmmmmmmmmmmmmmmmm-aaaaaaaaaaaaaaaaaaaaaaaa-suffix-cce1b8",
+            "prefix/",
+            "-suffix",
+            "prefix/mmmmmmmmmmmmmmmmmmmm.aaaaaaaaaaaaaaaaaaaaa.499dc0-suffix",
         ),
     ],
 )
-def test_generate_label_cases(model_name, app_name, suffix, expected):
-    if suffix is not None:
-        label = charm_kubernetes_label(model_name, app_name, suffix)
-    else:
-        label = charm_kubernetes_label(model_name, app_name)
+def test_generate_label_cases(model_name, app_name, prefix, suffix, expected):
+    label = charm_kubernetes_label(model_name, app_name, prefix, suffix)
     assert label == expected
     assert len(label) <= 63
 
@@ -64,12 +65,13 @@ def test_error_on_empty_model_or_app():
 
 
 @pytest.mark.parametrize(
-    "model_name, app_name, suffix",
+    "model_name, app_name, prefix, suffix",
     [
-        ("m", "a", "s" * 60),           # Suffix so long that only 1 char left for model/app
-        ("m" * 60, "a", "s" * 53),      # Suffix + hash so long that only 1 char left for model/app
+        ("m", "a", "", "s" * 61),           # Suffix so long that only 1 char left for model/app
+        ("m" * 60, "a", "", "s" * 54),      # Suffix + hash so long that only 1 char left for model/app
+        ("m" * 60, "a", "p"*20, "s" * 34),  # Suffix + prefix + hash so long that only 1 char left for model/app
     ],
 )
-def test_error_on_fixed_length_too_long_cases(model_name, app_name, suffix):
+def test_error_on_fixed_length_too_long_cases(model_name, app_name, prefix, suffix):
     with pytest.raises(ValueError):
-        charm_kubernetes_label(model_name, app_name, suffix)
+        charm_kubernetes_label(model_name, app_name, prefix, suffix)
