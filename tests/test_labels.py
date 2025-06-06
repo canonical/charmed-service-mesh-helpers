@@ -51,8 +51,8 @@ def test_generate_label_cases(model_name, app_name, prefix, suffix, expected):
 
 
 def test_separator():
-    label = charm_kubernetes_label("m"*40, "app"*40, "separator")
-    assert label == ""
+    label = charm_kubernetes_label("m"*40, "a"*40, separator="-")
+    assert label == "mmmmmmmmmmmmmmmmmmmmmmmmmmm-aaaaaaaaaaaaaaaaaaaaaaaaaaaa-ba9440"
     assert len(label) <= 63
 
 
