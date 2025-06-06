@@ -8,8 +8,8 @@ def charm_kubernetes_label(
         app_name: str,
         prefix: str="",
         suffix: str="",
-        max_length=63,
-        separator="."
+        max_length: int=63,
+        separator: str="."
 ) -> str:
     """Generate a Kubernetes label string in the form "{prefix}{model_name}{separator}{app_name}{suffix}".
 
