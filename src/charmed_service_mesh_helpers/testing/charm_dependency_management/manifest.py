@@ -8,7 +8,7 @@ a URL.
 
 import logging
 import urllib.parse
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Dict, List, Optional
 from urllib.request import urlopen
 
@@ -29,6 +29,7 @@ class CharmManifestEntry:
     entity_url: str
     revision: Optional[int] = None
     trust: Optional[bool] = None
+    resources: dict = field(default_factory=dict)
 
 
 class ManifestSource:

@@ -35,6 +35,9 @@ def temp_manifest_file() -> Path:
                     "channel": "1.0/stable",
                     "revision": 42,
                     "entity_url": "custom/url",
+                    "resources": {
+                        "some-image-name": "some-image-url"
+                    }
                 },
             },
             f,
@@ -65,26 +68,28 @@ def temp_manifest_file_2() -> Path:
 
 
 @pytest.mark.parametrize(
-    "channel, entity_url, revision, trust",
+    "channel, entity_url, revision, trust, resources",
     [
         # Test with all fields
-        ("latest/edge", "custom/url", 42, True),
+        ("latest/edge", "custom/url", 42, True, {"some-image-name": "some-image-url", "another-resource": "another-url"}),
         # Test with minimal fields
-        ("latest/edge", "default/url", None, None),
+        ("latest/edge", "default/url", None, None, None),
     ],
 )
-def test_charm_manifest_entry_creation(channel, entity_url, revision, trust):
+def test_charm_manifest_entry_creation(channel, entity_url, revision, trust, resources):
     """Test creating CharmManifestEntry objects."""
     entry = CharmManifestEntry(
         channel=channel,
         entity_url=entity_url,
         revision=revision,
         trust=trust,
+        resources=resources,
     )
     assert entry.channel == channel
     assert entry.entity_url == entity_url
     assert entry.revision == revision
     assert entry.trust is trust
+    assert entry.resources == resources
 
 
 def test_manifest_source_local_file(temp_manifest_file: Path):
