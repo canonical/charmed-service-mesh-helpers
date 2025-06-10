@@ -9,8 +9,7 @@ a URL.
 import logging
 import urllib.parse
 from dataclasses import dataclass
-from pathlib import Path
-from typing import Dict, List, Optional, Union
+from typing import Dict, List, Optional
 from urllib.request import urlopen
 
 import pytest
@@ -151,7 +150,7 @@ class CharmManifest:
 
 @pytest.fixture(scope="session")
 def charm_manifest(request) -> CharmManifest:
-    """Fixture providing access to the charm dependency manifest.
+    '''Fixture providing access to the charm dependency manifest.
 
     This fixture loads the manifest sources specified by the --dependency-manifest
     command line arguments and provides access to the charm configurations.
@@ -177,7 +176,7 @@ def charm_manifest(request) -> CharmManifest:
 
     Raises:
         ValueError: If no manifest sources are specified or cannot be loaded
-    """
+    '''
     # Developer note: This fixture is not tested directly in unit tests here.  If you edit it, manually test to confirm
     # it is working.
     manifest_sources = request.config.getoption("--dependency-manifest")

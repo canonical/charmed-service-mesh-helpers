@@ -13,6 +13,7 @@ from pathlib import Path
 
 import pytest
 import yaml
+
 from charmed_service_mesh_helpers.testing.charm_dependency_management import (
     CharmManifest,
     CharmManifestEntry,
