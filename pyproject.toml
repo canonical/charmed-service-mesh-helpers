@@ -18,14 +18,16 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
+    "pyyaml",
 ]
 
 [project.optional-dependencies]
 dev = [
     "codespell>=2.4",
-    "coverage[toml]>=7.8",
+    "coverage",
     "pyright>=1.1",
-    "pytest>=8.4",
+    "pytest",
+    "pytest-httpserver",
     "ruff>=0.11",
 ]
 
