@@ -70,6 +70,8 @@ class Source(BaseModel):
 
     principals: Optional[List[str]] = None
     notPrincipals: Optional[List[str]] = None  # noqa: N815
+    namespaces: Optional[List[str]] = None
+    notNamespaces: Optional[List[str]] = None
     # Did not model everything.
 
 
