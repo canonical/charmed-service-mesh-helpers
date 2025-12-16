@@ -102,7 +102,11 @@ class GatewayMetadataRequirer(Object):
         if not relation or not relation.app:
             return False
 
-        return "metadata" in relation.data[relation.app]
+        metadata_json = relation.data[relation.app].get("metadata")
+        if not metadata_json:
+            return False
+
+        return True
 
     def get_metadata(self) -> Optional[GatewayMetadata]:
         """Retrieve the gateway metadata published by the provider.
@@ -114,12 +118,7 @@ class GatewayMetadataRequirer(Object):
             return None
 
         relation = self._get_relation()
-        if not relation or not relation.app:
-            return None
-
         metadata_json = relation.data[relation.app].get("metadata")
-        if not metadata_json:
-            return None
 
         try:
             return GatewayMetadata.model_validate_json(metadata_json)
