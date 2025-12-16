@@ -18,7 +18,8 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
-  "pydantic",
+  "ops~=2.5",
+  "pydantic>=2",
 ]
 
 [project.optional-dependencies]
@@ -33,7 +34,9 @@ dev = [
 
 [tool.setuptools]
 package-dir = {"" = "src"}
-packages = ["charmed_service_mesh_helpers"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
 
 # Testing tools configuration
 [tool.coverage.run]
