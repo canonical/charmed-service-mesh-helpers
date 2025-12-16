@@ -118,10 +118,10 @@ class GatewayMetadataRequirer(Object):
             return None
 
         relation = self._get_relation()
-        metadata_json = relation.data[relation.app].get("metadata")
+        metadata_json = relation.data[relation.app].get("metadata")  # type: ignore
 
         try:
-            return GatewayMetadata.model_validate_json(metadata_json)
+            return GatewayMetadata.model_validate_json(metadata_json)  # type: ignore
         except Exception as e:
             logger.error(f"Failed to parse metadata from {relation}: {e}")
             return None
