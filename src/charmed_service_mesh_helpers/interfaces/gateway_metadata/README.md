@@ -36,6 +36,10 @@ class IstioIngressCharm(CharmBase):
 provides:
   gateway-metadata:
     interface: gateway_metadata
+    description: |
+      Provides metadata about the Gateway workload including namespace, gateway name,
+      deployment name, and service account. This allows related charms to reference
+      the Gateway workload in their configurations (e.g., in AuthorizationPolicies).
 ```
 
 ## Requirer Usage
