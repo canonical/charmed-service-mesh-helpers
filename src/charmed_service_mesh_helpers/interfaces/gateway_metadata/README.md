@@ -64,8 +64,6 @@ class MyCharm(CharmBase):
             return
 
         metadata = self.gateway_metadata.get_metadata()
-        if not metadata:
-            return
 
         # Use metadata fields:
         # - metadata.namespace
