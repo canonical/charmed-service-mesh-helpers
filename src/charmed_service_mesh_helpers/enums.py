@@ -25,6 +25,6 @@ class Action(str, Enum):
 
     allow = "ALLOW"
     deny = "DENY"
+    custom = "CUSTOM"
     # These exist, but not sure if we've implemented everything to support them
     # audit = "AUDIT"
-    # custom = "CUSTOM"

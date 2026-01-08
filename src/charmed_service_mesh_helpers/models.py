@@ -116,6 +116,12 @@ class Rule(BaseModel):
     model_config = ConfigDict(populate_by_name=True)
 
 
+class Provider(BaseModel):
+    """Provider defines the extension provider for the policy."""
+
+    name: Optional[str] = None
+
+
 class AuthorizationPolicySpec(BaseModel):
     """AuthorizationPolicyResource defines the structure of an Istio AuthorizationPolicy Kubernetes resource."""
 
@@ -123,10 +129,18 @@ class AuthorizationPolicySpec(BaseModel):
     targetRefs: Optional[List[PolicyTargetReference]] = Field(default=None)  # noqa: N815
     selector: Optional[WorkloadSelector] = Field(default=None)
     rules: Optional[List[Rule]] = None
+    provider: Optional[Provider] = Field(default=None)
 
     @model_validator(mode="after")
     def validate_target(self):
         """Validate that at most one of targetRefs and selector is defined."""
         if self.targetRefs is not None and self.selector is not None:
             raise ValueError("At most one of targetRefs and selector can be set")
+        return self
+
+    @model_validator(mode="after")
+    def validate_provider_action(self):
+        """Validate that CUSTOM action must be set when specifying extension providers."""
+        if self.provider is not None and self.action is not Action.custom:
+            raise ValueError("CUSTOM action must be set when specifying extension providers")
         return self
