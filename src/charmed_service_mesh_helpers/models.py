@@ -70,7 +70,8 @@ class Source(BaseModel):
 
     principals: Optional[List[str]] = None
     notPrincipals: Optional[List[str]] = None  # noqa: N815
-    # Did not model everything.
+    ipBlocks: Optional[List[str]] = None  # noqa: N815
+    notIpBlocks: Optional[List[str]] = None  # noqa: N815
 
 
 class From(BaseModel):
