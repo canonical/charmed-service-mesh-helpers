@@ -72,6 +72,7 @@ class Source(BaseModel):
     notPrincipals: Optional[List[str]] = None  # noqa: N815
     ipBlocks: Optional[List[str]] = None  # noqa: N815
     notIpBlocks: Optional[List[str]] = None  # noqa: N815
+    namespaces: Optional[List[str]] = None  # noqa: N815
 
 
 class From(BaseModel):
