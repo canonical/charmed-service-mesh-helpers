@@ -26,6 +26,7 @@ dependencies = [
 dev = [
     "codespell",
     "coverage[toml]",
+    "ops-scenario",
     "pyright",
     "pytest",
     "ruff",
