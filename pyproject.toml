@@ -12,13 +12,13 @@ version = "999.999.999"  # Do not edit - automatically replaced with a valid rel
 description = "Helpers for the Service Mesh charms."
 readme = "README.md"
 license = { file = "LICENSE" }
-requires-python = "~=3.8"
+requires-python = ">=3.10"
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
 ]
 dependencies = [
-  "ops~=2.5",
+  "ops~=3.0",
   "pydantic>=2",
 ]
 
